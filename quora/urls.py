@@ -7,6 +7,7 @@ router = DefaultRouter()
 
 router.register('questions', views.QuestionViewSet)
 router.register('answers', views.AnswerViewSet)
+router.register('likes', views.LikeViewSet)
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html"), name='index'),
