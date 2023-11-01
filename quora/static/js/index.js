@@ -51,9 +51,10 @@ async function fetchData() {
                         <p class="max-w-3xl mt-5">${answer.content}</p>
                         <div class="mt-4 flex items-center">
                             <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/love-circled.png" alt="love-circled"/>
-                            <img width="30" height="30" src="https://img.icons8.com/fluency/48/love-circled.png" alt="love-circled"/>
+                            <img width="30" height="30" src="https://img.icons8.com/fluency/48/love-circled.png" alt="love-circled" class="like-button" data-answer-id="${answer.id}"/>
                             <p>${likeCount} likes</p>
                         </div>
+                        <p class="mt-4 italic">Add answer</p>
                     </div>
                 `;
 
@@ -67,3 +68,44 @@ async function fetchData() {
 }
 
 fetchData();
+
+$(document).on('click', '.like-button', function () {
+    const answerId = $(this).data('answer-id');
+    console.log('answerId', answerId);
+    // Get CSRF token from cookie
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+    $.ajax({
+        url: '/api/likes/like-answer/',
+        type: 'POST',
+        data: {
+            answer_id: answerId
+        },
+        headers: {
+            'X-CSRFToken': csrftoken
+        },
+        success: function (data) {
+            // Update the like count on the page
+            const likeCountElement = $(this).siblings('.like-count');
+            likeCountElement.text(parseInt(likeCountElement.text()) + 1);
+            $(this).off('click'); // Disable further clicks
+        },
+        error: function (error) {
+            console.log('Error: ', error);
+        }
+    });
+});
