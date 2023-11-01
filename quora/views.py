@@ -23,6 +23,14 @@ class QuestionViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPageNumberPagination
     serializer_class = QuestionSerializer
 
+    @action(detail=False, methods=['GET'],  url_path="questions-without-answer")
+    def questions_without_answer(self, request):
+        questions_without_answer = Question.objects.filter(answer__isnull=True)
+        print(questions_without_answer)
+        page = self.paginate_queryset(questions_without_answer)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+
 
 class AnswerViewSet(viewsets.ModelViewSet):
     queryset = Answer.objects.all().order_by('id')
@@ -45,7 +53,6 @@ class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all().order_by('id')
     pagination_class = CustomPageNumberPagination
     serializer_class = LikeSerializer
-    http_method_names = ['get', 'post', 'head']  # Add 'post' to http_method_names
 
     @action(detail=False, methods=['GET'])
     def answer_like_count(self, request):
