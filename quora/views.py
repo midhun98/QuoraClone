@@ -32,6 +32,12 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(question__answer__isnull=False).distinct()
 
+    @action(detail=False, methods=['GET'],  url_path="answers-to-question")
+    def answers_to_question(self, request):
+        question_id = request.query_params.get('question_id')
+        answers = self.queryset.filter(question_id=question_id)
+        serializer = AnswerSerializer(answers, many=True)
+        return Response(serializer.data)  # Return the serialized data
 
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all().order_by('id')

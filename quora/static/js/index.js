@@ -42,21 +42,24 @@ async function fetchData() {
                 const likeCount = likeData.like_count;
 
                 const html = `
-                    <div class="max-w-screen-xl mx-auto block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mt-4">
-                        <a class="flex items-center gap-1 mb-4" href="">
-                            <img class="w-8 h-8 rounded-full" src=${userData.profile_picture} alt="">
-                            <span class="font-bold hover:underline">${userData.first_name} ${userData.last_name}</span>
-                        </a>
+                <div class="max-w-screen-xl mx-auto block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mt-4">
+                    <a class="flex items-center gap-1 mb-4" href="">
+                        <img class="w-8 h-8 rounded-full" src=${userData.profile_picture} alt="">
+                        <span class="font-bold hover:underline">${userData.first_name} ${userData.last_name}</span>
+                    </a>
+                    <a href="/answers/?question_id=${answer.question.id}"> <!-- Add this line -->
                         <h1 class="font-bold text-xl max-w-3xl">${answer.question.title}</h1>
-                        <p class="max-w-3xl mt-5">${answer.content}</p>
-                        <div class="mt-4 flex items-center">
-                            <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/love-circled.png" alt="love-circled"/>
-                            <img width="30" height="30" src="https://img.icons8.com/fluency/48/love-circled.png" alt="love-circled" class="like-button" data-answer-id="${answer.id}"/>
-                            <p>${likeCount} likes</p>
-                        </div>
-                        <p class="mt-4 italic">Add answer</p>
+                    </a>
+                    <p class="max-w-3xl mt-5">${answer.content}</p>
+                    <div class="mt-4 flex items-center">
+                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/love-circled.png" alt="love-circled"/>
+                        <img width="30" height="30" src="https://img.icons8.com/fluency/48/love-circled.png" alt="love-circled" class="like-button" data-answer-id="${answer.id}"/>
+                        <p>${likeCount} likes</p>
                     </div>
-                `;
+                    <p class="mt-4 italic">Add answer</p>
+                </div>
+            `;
+
 
                 $('#answers').append(html);
                 questionIds[answer.question.id] = true;
