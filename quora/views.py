@@ -22,3 +22,16 @@ class QuestionViewSet(viewsets.ModelViewSet):
     serializer_class = QuestionSerializer
 
 
+class AnswerViewSet(viewsets.ModelViewSet):
+    queryset = Answer.objects.all().order_by('id')
+    pagination_class = CustomPageNumberPagination
+    serializer_class = AnswerSerializer
+
+    def get_queryset(self):
+        return self.queryset.filter(question__answer__isnull=False).distinct()
+
+
+class LikeViewSet(viewsets.ModelViewSet):
+    queryset = Like.objects.all().order_by('id')
+    pagination_class = CustomPageNumberPagination
+    serializer_class = LikeSerializer

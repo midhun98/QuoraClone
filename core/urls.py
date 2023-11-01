@@ -5,10 +5,8 @@ from django.contrib.auth.decorators import login_required
 from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 
-router.register('questions', views.QuestionViewSet)
-router.register('answers', views.AnswerViewSet)
+router.register('users', views.CustomUserViewSet)
 
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="index.html"), name='index'),
     path('api/', include(router.urls)),
 ]
