@@ -36,8 +36,10 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def answers_to_question(self, request):
         question_id = request.query_params.get('question_id')
         answers = self.queryset.filter(question_id=question_id)
-        serializer = AnswerSerializer(answers, many=True)
-        return Response(serializer.data)  # Return the serialized data
+        page = self.paginate_queryset(answers)
+        serializer = self.get_serializer(page, many=True)
+        return self.get_paginated_response(serializer.data)
+
 
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all().order_by('id')

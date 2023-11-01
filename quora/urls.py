@@ -11,6 +11,6 @@ router.register('likes', views.LikeViewSet)
 
 urlpatterns = [
     path("", TemplateView.as_view(template_name="index.html"), name='index'),
-    path("answers", TemplateView.as_view(template_name="answers.html"), name='index'),
+    path("answers/<int:question_id>", TemplateView.as_view(template_name="answers.html"), name='index'),
     path('api/', include(router.urls)),
 ]

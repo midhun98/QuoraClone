@@ -25,29 +25,26 @@ async function getUserData(userId) {
 async function fetchData() {
     try {
         const data = await $.ajax({
-            url: '/api/answers/',
+            url: `/api/answers/answers-to-question/?question_id=${questionId}`,
             type: 'GET',
             dataType: 'json',
         });
 
-        const questionIds = {};  // To keep track of questions seen
-
         for (const answer of data.results) {
-            if (!questionIds.hasOwnProperty(answer.question.id)) {
-                const [userData, likeData] = await Promise.all([
-                    getUserData(answer.user),
-                    getLikes(answer.id)
-                ]);
+            const [userData, likeData] = await Promise.all([
+                getUserData(answer.user),
+                getLikes(answer.id)
+            ]);
 
-                const likeCount = likeData.like_count;
+            const likeCount = likeData.like_count;
 
-                const html = `
+            const html = `
                 <div class="max-w-screen-xl mx-auto block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mt-4">
                     <a class="flex items-center gap-1 mb-4" href="">
                         <img class="w-8 h-8 rounded-full" src=${userData.profile_picture} alt="">
                         <span class="font-bold hover:underline">${userData.first_name} ${userData.last_name}</span>
                     </a>
-                    <a href="/answers/${answer.question.id}"> <!-- Add this line -->
+                    <a href="/answers/${answer.question.id}">
                         <h1 class="font-bold text-xl max-w-3xl">${answer.question.title}</h1>
                     </a>
                     <p class="max-w-3xl mt-5">${answer.content}</p>
@@ -60,10 +57,7 @@ async function fetchData() {
                 </div>
             `;
 
-
-                $('#answers').append(html);
-                questionIds[answer.question.id] = true;
-            }
+            $('#answers').append(html);
         }
     } catch (error) {
         console.log('Error: ', error);

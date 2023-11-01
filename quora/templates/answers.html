@@ -1,4 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
+<div id="answers"></div>
 
+{% load static %}
+<script>
+    let questionId = {{ question_id }};
+</script>
+<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="{% static "js/answers.js" %}"></script>
 {% endblock %}
