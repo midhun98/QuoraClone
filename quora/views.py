@@ -55,6 +55,17 @@ class AnswerViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(page, many=True)
         return self.get_paginated_response(serializer.data)
 
+    def create(self, request, *args, **kwargs):
+        question_id = request.data.get('question')
+        question_obj = Question.objects.get(id=question_id)
+        answer_data = {
+            'content': request.data.get('content'),
+            'user': request.user,
+            'question': question_obj
+        }
+        Answer.objects.create(**answer_data)
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
+
 
 class LikeViewSet(viewsets.ModelViewSet):
     queryset = Like.objects.all().order_by('id')
