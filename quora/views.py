@@ -1,20 +1,20 @@
-from django.shortcuts import render
 from rest_framework import status, viewsets
-from core.views import CustomPageNumberPagination
-from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.response import Response
 
+from core.views import CustomPageNumberPagination
+from .models import (
+    Question,
+    Answer,
+    Like,
+)
 from .serializers import (
     QuestionSerializer,
     AnswerSerializer,
     LikeSerializer,
 )
 
-from .models import (
-    Question,
-    Answer,
-    Like,
-)
+
 # Create your views here.
 
 
@@ -23,13 +23,20 @@ class QuestionViewSet(viewsets.ModelViewSet):
     pagination_class = CustomPageNumberPagination
     serializer_class = QuestionSerializer
 
-    @action(detail=False, methods=['GET'],  url_path="questions-without-answer")
+    @action(detail=False, methods=['GET'], url_path="questions-without-answer")
     def questions_without_answer(self, request):
         questions_without_answer = Question.objects.filter(answer__isnull=True)
-        print(questions_without_answer)
         page = self.paginate_queryset(questions_without_answer)
         serializer = self.get_serializer(page, many=True)
         return self.get_paginated_response(serializer.data)
+
+    def create(self, request, *args, **kwargs):
+        question_data = {
+            'title': request.data.get('title'),
+            'user': request.user,
+        }
+        Question.objects.create(**question_data)
+        return Response({'success': True}, status=status.HTTP_201_CREATED)
 
 
 class AnswerViewSet(viewsets.ModelViewSet):
@@ -40,7 +47,7 @@ class AnswerViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return self.queryset.filter(question__answer__isnull=False).distinct()
 
-    @action(detail=False, methods=['GET'],  url_path="answers-to-question")
+    @action(detail=False, methods=['GET'], url_path="answers-to-question")
     def answers_to_question(self, request):
         question_id = request.query_params.get('question_id')
         answers = self.queryset.filter(question_id=question_id)
@@ -64,7 +71,7 @@ class LikeViewSet(viewsets.ModelViewSet):
 
         return Response({'answer_id': answer_id, 'like_count': like_count})
 
-    @action(detail=False, methods=['POST'],  url_path="like-answer")
+    @action(detail=False, methods=['POST'], url_path="like-answer")
     def like_answer(self, request):
         answer_id = request.data.get('answer_id')
         print("answer_id", answer_id)
@@ -80,4 +87,3 @@ class LikeViewSet(viewsets.ModelViewSet):
         like = Like(answer=answer, user=user)
         like.save()
         return Response({'message': 'Answer liked successfully.'}, status=status.HTTP_200_OK)
-

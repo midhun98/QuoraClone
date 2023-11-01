@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="mb-6 max-w-screen-xl mx-auto block p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 mt-4">
+        <label for="large-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ask questions</label>
+
+        <input type="text" id="large-input" class="block w-full p-4 text-gray-900 border border-gray-300
+        rounded-lg bg-gray-50 sm:text-md focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700
+        dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+
+        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4
+        focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600
+        dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 mt-4" id="submit-button">Submit</button>
+    </div>
+    {% load static %}
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="{% static "js/add_question.js" %}"></script>
+{% endblock %}
