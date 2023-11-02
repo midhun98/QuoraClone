@@ -78,7 +78,7 @@
                             </li>
                         </ul>
                         <div class="py-1">
-                            <a href="#"
+                            <a href="#" id="logout-button"
                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-400 dark:hover:text-white">Sign
                                 out</a>
                         </div>
@@ -91,7 +91,9 @@
 <div id="answers"></div>
 
 {% load static %}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="{% static "js/index.js" %}"></script>
+<script type="text/javascript" src="{% static "js/logout.js" %}"></script>
 </body>
 </html>
