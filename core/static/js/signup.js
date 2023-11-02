@@ -24,15 +24,19 @@ $(document).ready(function () {
                 'X-CSRFToken': csrfToken,
             },
             success: function (response) {
-                swal.fire({
-                    title: "Success",
-                    text: "User created successfully!",
-                    icon: "success",
-                    confirmButtonText: "OK"
-                });
-                setTimeout(function () {
-                    window.location.href = '/';
-                }, 1500);
+                if (response.status === 'success') {
+                    swal.fire({
+                        title: "Success",
+                        text: "User created successfully!",
+                        icon: "success",
+                        confirmButtonText: "OK"
+                    });
+                    setTimeout(function () {
+                        window.location.href = '/';
+                    }, 1500);
+                } else {
+                    alert("Error creating user: " + response.message);
+                }
             },
             error: function (xhr) {
                 if (xhr.status === 400) {
@@ -42,6 +46,7 @@ $(document).ready(function () {
                 }
             }
         });
+
     });
 });
 
