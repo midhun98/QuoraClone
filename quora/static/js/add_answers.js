@@ -1,7 +1,9 @@
+$(document).ready(function() {
+    $('#answer-content').val('');
+});
+
 $(document).on('click', '#add-answer', function() {
     const answerContent = $('#answer-content').val();
-    console.log('answerContent', answerContent);
-    console.log("hiiiii")
     function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== '') {
@@ -33,7 +35,7 @@ $(document).on('click', '#add-answer', function() {
             // handle the successful submission here, clearing the form
             alert('Answer created successfully');
 
-            $('#answer-form').remove();
+            $('#answer-form').val('');
         },
         error: function(error) {
             // handle errors here
