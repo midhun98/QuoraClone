@@ -22,6 +22,20 @@ async function getUserData(userId) {
     });
 }
 
+$(document).ready(function () {
+    $.ajax({
+        url: `/api/questions/${questionId}`,
+        type: 'GET',
+        dataType: 'json',
+        success: function (questionData) {
+            $('#question_title').html(`<h1>${questionData.title}</h1>`);
+        },
+        error: function (error) {
+            console.log('Error: ', error);
+        }
+    });
+});
+
 async function fetchData() {
     try {
         const data = await $.ajax({
@@ -43,9 +57,6 @@ async function fetchData() {
                     <a class="flex items-center gap-1 mb-4" href="">
                         <img class="w-8 h-8 rounded-full" src=${userData.profile_picture} alt="">
                         <span class="font-bold hover:underline">${userData.first_name} ${userData.last_name}</span>
-                    </a>
-                    <a href="/answers/${answer.question.id}">
-                        <h1 class="font-bold text-xl max-w-3xl">${answer.question.title}</h1>
                     </a>
                     <p class="max-w-3xl mt-5">${answer.content}</p>
                     <div class="mt-4 flex items-center">
