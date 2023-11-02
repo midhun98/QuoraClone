@@ -60,7 +60,6 @@ async function fetchData() {
                     </a>
                     <p class="max-w-3xl mt-5">${answer.content}</p>
                     <div class="mt-4 flex items-center">
-                        <img width="30" height="30" src="https://img.icons8.com/ios-filled/50/love-circled.png" alt="love-circled"/>
                         <img width="30" height="30" src="https://img.icons8.com/fluency/48/love-circled.png" alt="love-circled" class="like-button" data-answer-id="${answer.id}"/>
                         <p>${likeCount} likes</p>
                     </div>
