@@ -11,6 +11,8 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/login/', views.login_api, name='login-api'),
     path('api/logout/', views.logout_api, name='logout-api'),
+    path('api/signup/', views.signup, name='signup-api'),
     path("login/", TemplateView.as_view(template_name="login.html"), name='login-page'),
+    path("signup/", TemplateView.as_view(template_name="signup.html"), name='signup-page'),
 
 ]
