@@ -4,7 +4,6 @@ $(document).ready(function() {
         'use strict';
         let username = $('#email').val();
         let password = $('#password').val();
-        console.log("hiiissssii", username, password)
 
         function getCookie(name) {
             let cookieValue = null;

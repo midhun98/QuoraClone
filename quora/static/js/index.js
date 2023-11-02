@@ -47,7 +47,7 @@ async function fetchData() {
                         <img class="w-8 h-8 rounded-full" src=${userData.profile_picture} alt="">
                         <span class="font-bold hover:underline">${userData.first_name} ${userData.last_name}</span>
                     </a>
-                    <a href="/answers/${answer.question.id}"> <!-- Add this line -->
+                    <a href="/answers/${answer.question.id}"> 
                         <h1 class="font-bold text-xl max-w-3xl">${answer.question.title}</h1>
                     </a>
                     <p class="max-w-3xl mt-5">${answer.content}</p>

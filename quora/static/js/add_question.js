@@ -7,7 +7,6 @@ $(document).ready(function () {
         // Create a data object to send in the POST request
         const questionData = {
             title: questionText,
-            // You might also want to include the user information if needed
         };
         function getCookie(name) {
             let cookieValue = null;
