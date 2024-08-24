@@ -1,5 +1,5 @@
 **Quora Clone**
-This is a simple Quora Clone done using Django Rest framework for the backend and JS with tailwind css for the ui.
+This is a simple Quora Clone done using Django Rest framework for the backend and JS with tailwind css for the ui..
 
 The functionalities for the app are
 
